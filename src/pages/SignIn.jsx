@@ -1,10 +1,28 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const SignIn = () => {
+  const { loginUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    loginUser(email, password)
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="flex items-center justify-center py-10">
-      <div className="card w-full max-w-md shadow-xl bg-white p-8 border-2 border-gray-200">
+      <form
+        onSubmit={handleSignIn}
+        className="card w-full max-w-md shadow-xl bg-white p-8 border-2 border-gray-200"
+      >
         <h2 className="text-3xl font-bold text-center mb-6">
           Login to TripMate
         </h2>
@@ -18,6 +36,7 @@ const SignIn = () => {
             type="email"
             placeholder="Enter your email"
             className="input input-bordered w-full"
+            name="email"
           />
         </div>
 
@@ -30,6 +49,7 @@ const SignIn = () => {
             type="password"
             placeholder="Enter your password"
             className="input input-bordered w-full"
+            name="password"
           />
         </div>
 
@@ -45,7 +65,7 @@ const SignIn = () => {
             Sign Up
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };

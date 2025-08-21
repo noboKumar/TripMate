@@ -1,10 +1,37 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const SignUp = () => {
+  const { createUser, updateUser, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const userName = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result);
+        const userData = result.user;
+        updateUser({ displayName: userName })
+          .then(() => {
+            setUser({ ...userData, displayName: userName });
+            navigate("/");
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="flex items-center justify-center py-10">
-      <div className="card w-full max-w-md shadow-xl bg-white p-8 border-2 border-gray-200">
+      <form
+        onSubmit={handleSignUp}
+        className="card w-full max-w-md shadow-xl bg-white p-8 border-2 border-gray-200"
+      >
         <h2 className="text-3xl font-bold text-center mb-6">
           Create an account on TripMate
         </h2>
@@ -17,6 +44,7 @@ const SignUp = () => {
             type="text"
             placeholder="Enter your name"
             className="input input-bordered w-full"
+            name="name"
           />
         </div>
 
@@ -29,6 +57,7 @@ const SignUp = () => {
             type="email"
             placeholder="Enter your email"
             className="input input-bordered w-full"
+            name="email"
           />
         </div>
 
@@ -41,6 +70,7 @@ const SignUp = () => {
             type="password"
             placeholder="Enter your password"
             className="input input-bordered w-full"
+            name="password"
           />
         </div>
 
@@ -56,7 +86,7 @@ const SignUp = () => {
             Sign In
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };
