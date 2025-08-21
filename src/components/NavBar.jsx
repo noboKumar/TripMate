@@ -1,12 +1,12 @@
 import React from "react";
-import Logo from "./Logo";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Logo from "./Logo";
 
 const NavBar = () => {
   const navLinks = (
     <>
       <li>
-        <a>Item 1</a>
+        <a>Home</a>
       </li>
       <li>
         <a>Item 3</a>
@@ -14,11 +14,17 @@ const NavBar = () => {
     </>
   );
   return (
-    <div className="bg-base-100 shadow-sm">
-      <div className="navbar w-11/12 md:w-10/12 mx-auto">
+    <div className="bg-base-100 shadow-sm sticky top-0">
+      <div className="navbar w-10/12 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
-            <GiHamburgerMenu />
+            <div
+              tabIndex={0}
+              role="button"
+              className="cursor-pointer lg:hidden"
+            >
+              <GiHamburgerMenu />
+            </div>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
@@ -26,9 +32,7 @@ const NavBar = () => {
               {navLinks}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">
             <Logo></Logo>
-          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
