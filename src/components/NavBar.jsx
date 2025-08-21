@@ -1,15 +1,16 @@
 import React from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Logo from "./Logo";
+import { Link, NavLink } from "react-router";
 
 const NavBar = () => {
   const navLinks = (
     <>
       <li>
-        <a>Home</a>
+        <NavLink to={"/"}>Home</NavLink>
       </li>
       <li>
-        <a>Item 3</a>
+        <NavLink>Trips</NavLink>
       </li>
     </>
   );
@@ -32,13 +33,15 @@ const NavBar = () => {
               {navLinks}
             </ul>
           </div>
-            <Logo></Logo>
+          <Logo></Logo>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+          <ul className="menu menu-horizontal px-1 text-lg">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Login</a>
+          <Link to={"/signIn"} className="btn">
+            Login
+          </Link>
         </div>
       </div>
     </div>
