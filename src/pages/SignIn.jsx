@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router";
 
-const Login = () => {
+const SignIn = () => {
   return (
     <div className="flex items-center justify-center py-10">
       <div className="card w-full max-w-md shadow-xl bg-white p-8 border-2 border-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-6">Login to TripMate</h2>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Login to TripMate
+        </h2>
 
         {/* Email Input */}
         <div className="form-control mb-4">
@@ -48,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;
