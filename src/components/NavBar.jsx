@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Logo from "./Logo";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
+  const { user } = useContext(AuthContext);
   const navLinks = (
     <>
       <li>
@@ -38,10 +40,15 @@ const NavBar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-lg">{navLinks}</ul>
         </div>
-        <div className="navbar-end">
-          <Link to={"/signIn"} className="btn">
-            Login
-          </Link>
+        <div className="navbar-end gap-2">
+          {user && <p>{user.displayName}</p>}
+          {user ? (
+            <button className="btn bg-red-500 text-white">Log Out</button>
+          ) : (
+            <Link to={"/signIn"} className="btn">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>
