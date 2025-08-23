@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import coverPhoto from "../assets/cover-photo.jpg";
 import { FaPlus } from "react-icons/fa";
 import AddItinerariesModal from "./AddItinerariesModal";
+import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Hero = () => {
+  const { user } = useContext(AuthContext);
   const handleAddItinerary = () => {
+    if (!user) {
+      toast.error("Please log in to add itineraries.");
+      return;
+    }
     document.getElementById("my_modal_3").showModal();
   };
 

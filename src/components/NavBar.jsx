@@ -7,13 +7,17 @@ import { AuthContext } from "../context/AuthContext";
 const NavBar = () => {
   const { user } = useContext(AuthContext);
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0">
+    <div className="bg-base-100 shadow-sm sticky top-0 z-10">
       <div className="navbar w-10/12 mx-auto">
         <div className="navbar-start">
           <Logo></Logo>
         </div>
         <div className="navbar-end gap-2">
-          {user && <p className="font-semibold bg-gray-100 px-4 py-2 rounded-2xl">{user.displayName}</p>}
+          {user && (
+            <p className="font-semibold bg-gray-100 px-4 py-2 rounded-2xl">
+              {user.displayName}
+            </p>
+          )}
           {user ? (
             <button className="btn bg-red-500 text-white">Log Out</button>
           ) : (
