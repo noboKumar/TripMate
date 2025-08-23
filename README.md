@@ -4,6 +4,8 @@ A modern travel itinerary planner web application built with **React.js** and **
 Easily plan trips, save favorites, and search itineraries by destination or activity.
 
 ---
+Live: [https://tripmate-8efe6.web.app/](https://tripmate-8efe6.web.app/)  
+---
 
 ## ✨ Features  
 
