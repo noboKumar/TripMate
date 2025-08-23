@@ -1,25 +1,37 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
+import { AuthContext } from "../context/AuthContext";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/firebase.config";
+import toast from "react-hot-toast";
 
 const AddItinerariesModal = () => {
   const [selected, setSelected] = useState({ from: null, to: null });
   const [showCalendar, setShowCalendar] = useState(false);
   const calendarRef = useRef();
+  const { user } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     document.getElementById("my_modal_3").close();
 
     const form = e.target;
     const formData = new FormData(form);
     const itinerary = Object.fromEntries(formData);
-
-    // Add selected start and end dates
+    if (user?.email) {
+      itinerary.userEmail = user.email;
+    }
     itinerary.startDate = selected.from;
     itinerary.endDate = selected.to;
-
     console.log(itinerary);
+
+    try {
+      await addDoc(collection(db, "itineraries"), itinerary);
+      toast.success('Itinerary added successfully!');
+    } catch (error) {
+      toast.error("Error saving itinerary:", error);
+    }
   };
 
   // Close calendar when clicking outside
@@ -63,6 +75,7 @@ const AddItinerariesModal = () => {
                 name="destination"
                 placeholder="eg. Bali"
                 className="input w-full"
+                required
               />
             </div>
 
@@ -72,7 +85,7 @@ const AddItinerariesModal = () => {
                 Photo URL
               </label>
               <input
-                type="text"
+                type="url"
                 name="photo"
                 placeholder="eg. https://example.com/photo.jpg"
                 className="input w-full"
@@ -84,7 +97,12 @@ const AddItinerariesModal = () => {
               <label htmlFor="tripType" className="font-medium">
                 Trip Type
               </label>
-              <select name="tripType" defaultValue="" className="select w-full">
+              <select
+                required
+                name="tripType"
+                defaultValue=""
+                className="select w-full"
+              >
                 <option value="" disabled>
                   Pick a Type
                 </option>
@@ -102,6 +120,8 @@ const AddItinerariesModal = () => {
               <input
                 type="text"
                 readOnly
+                required
+                name="dates"
                 value={
                   selected.from
                     ? selected.to
@@ -135,6 +155,7 @@ const AddItinerariesModal = () => {
                 name="activities"
                 placeholder="eg. Surfing, Hiking"
                 className="input w-full textarea"
+                required
               />
             </div>
 
