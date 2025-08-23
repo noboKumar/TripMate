@@ -6,7 +6,6 @@ import { AuthContext } from "../context/AuthContext";
 const ItinerariesPage = () => {
   const { user } = useContext(AuthContext);
   const [itineraries, setItineraries] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchItineraries = async () => {
@@ -19,20 +18,28 @@ const ItinerariesPage = () => {
           .filter((trip) => trip.userEmail === user.email);
 
         setItineraries(userItineraries);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching itineraries:", error);
-        setLoading(false);
       }
     };
 
     fetchItineraries();
   }, [user]);
 
-  if (loading) return <p className="p-6">Loading itineraries...</p>;
-
   if (!user) {
-    return <p className="p-6">Please log in to view your itineraries.</p>;
+    return (
+      <div className="flex flex-col items-center justify-center space-y-4 py-20">
+        <p className="text-xl font-medium text-gray-700">
+          Please log in to view your itineraries.
+        </p>
+        <a
+          href="/login"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition"
+        >
+          Log In
+        </a>
+      </div>
+    );
   }
 
   return (
@@ -58,7 +65,7 @@ const ItinerariesPage = () => {
           return (
             <div
               key={trip.id}
-              className="border-2 border-gray-400 p-4 rounded-md shadow-md bg-gray-100 cursor-pointer transition transform hover:scale-105"
+              className="border-2 border-gray-400 p-4 rounded-xl shadow-md bg-gray-100 cursor-pointer transition transform hover:scale-105"
             >
               {trip.photo && (
                 <img
