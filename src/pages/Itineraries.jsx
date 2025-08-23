@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 import { AuthContext } from "../context/AuthContext";
 import {
@@ -9,13 +9,14 @@ import {
   HiOutlineHashtag,
 } from "react-icons/hi";
 import placeholderImg from "../assets/placeholder-Img.jpeg";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SearchBar from "../components/SearchBar";
 
 const ItinerariesPage = () => {
   const { user } = useContext(AuthContext);
   const [itineraries, setItineraries] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showFavourites, setShowFavourites] = useState(false);
 
   useEffect(() => {
     const fetchItineraries = async () => {
@@ -36,6 +37,22 @@ const ItinerariesPage = () => {
     fetchItineraries();
   }, [user]);
 
+  const toggleFavourite = async (tripId, currentStatus) => {
+    try {
+      const tripRef = doc(db, "itineraries", tripId);
+      await updateDoc(tripRef, { favourite: !currentStatus });
+
+      // Optimistically update local state
+      setItineraries((prev) =>
+        prev.map((trip) =>
+          trip.id === tripId ? { ...trip, favourite: !currentStatus } : trip
+        )
+      );
+    } catch (error) {
+      console.error("Error updating favourite status:", error);
+    }
+  };
+
   if (!user) {
     return (
       <div className="flex flex-col items-center justify-center space-y-4 py-20">
@@ -51,8 +68,11 @@ const ItinerariesPage = () => {
       </div>
     );
   }
+  const displayedItineraries = itineraries.filter(
+    (trip) => !showFavourites || trip.favourite
+  );
 
-  const filteredItineraries = itineraries.filter((trip) => {
+  const filteredItineraries = displayedItineraries.filter((trip) => {
     const query = searchQuery.toLowerCase();
     return (
       trip.destination.toLowerCase().includes(query) ||
@@ -67,7 +87,17 @@ const ItinerariesPage = () => {
   return (
     <div className="p-6">
       <h1 className="text-4xl font-medium py-5 divider">Your Trips:</h1>
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <div className="flex gap-5 items-center justify-between">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <button
+          className={`mb-4 ${
+            showFavourites ? "bg-blue-500" : "bg-orange-500"
+          } text-white px-4 py-2 rounded-lg cursor-pointer`}
+          onClick={() => setShowFavourites(!showFavourites)}
+        >
+          {showFavourites ? "Show All" : "Show Favourites"}
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {filteredItineraries.length > 0 ? (
           filteredItineraries.map((trip) => {
@@ -97,8 +127,15 @@ const ItinerariesPage = () => {
                     alt={trip.destination}
                     className="w-full h-40 object-cover rounded-md mb-2"
                   />
-                  <div className="absolute top-2 right-2 bg-white p-2 rounded-full transition transform hover:scale-110 cursor-pointer">
-                    <FaRegHeart size={30} className="text-red-500" />
+                  <div
+                    className="absolute top-2 right-2 bg-white p-2 rounded-full transition transform hover:scale-110 cursor-pointer"
+                    onClick={() => toggleFavourite(trip.id, trip.favourite)}
+                  >
+                    {trip.favourite ? (
+                      <FaHeart size={30} className="text-red-500" />
+                    ) : (
+                      <FaRegHeart size={30} className="text-gray-400" />
+                    )}
                   </div>
                 </div>
 
