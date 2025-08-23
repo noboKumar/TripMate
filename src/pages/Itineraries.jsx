@@ -13,7 +13,7 @@ const ItinerariesPage = () => {
       if (!user) return;
 
       try {
-        // Firestore query: get only itineraries for logged-in user
+        // FireStore query: get only itineraries for logged-in user
         const q = query(
           collection(db, "itineraries"),
           where("email", "==", user.email)
@@ -38,11 +38,11 @@ const ItinerariesPage = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Your Itineraries</h1>
-      <div className="space-y-4">
+      <h1 className="text-4xl font-medium py-5 divider">Your Trips:</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 space-y-4">
         {itineraries.length > 0 ? (
           itineraries.map((trip) => (
-            <div key={trip.id} className="border p-4 rounded-md shadow-md">
+            <div key={trip.id} className="border-2 border-gray-400 p-4 rounded-md shadow-md bg-gray-100">
               <h2 className="text-xl font-semibold">{trip.destination}</h2>
               <p className="text-gray-600">Type: {trip.tripType}</p>
               <p className="text-gray-600">

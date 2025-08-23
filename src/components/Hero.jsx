@@ -1,7 +1,13 @@
 import React from "react";
 import coverPhoto from "../assets/cover-photo.jpg";
+import { FaPlus } from "react-icons/fa";
+import AddItinerariesModal from "./AddItinerariesModal";
 
 const Hero = () => {
+  const handleAddItinerary = () => {
+    document.getElementById("my_modal_3").showModal();
+  };
+
   return (
     <div className="relative w-full max-h-[500px]">
       {/* Background Image */}
@@ -12,7 +18,7 @@ const Hero = () => {
       />
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/20"></div>
+      <div className="absolute inset-0 bg-black/40"></div>
 
       {/* Text & Button */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
@@ -23,10 +29,15 @@ const Hero = () => {
           Create, organize, and save your travel itineraries easily with
           TripMate
         </p>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer font-semibold py-3 px-6 rounded-lg transition">
+        <button
+          onClick={handleAddItinerary}
+          className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer font-semibold py-3 px-6 rounded-lg transition flex items-center gap-2"
+        >
+          <FaPlus />
           Add Itinerary
         </button>
       </div>
+      <AddItinerariesModal />
     </div>
   );
 };
