@@ -1,11 +1,32 @@
 import React, { useContext } from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
 import Logo from "./Logo";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import Swal from "sweetalert2";
 
 const NavBar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logoutUser } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Logged Out!",
+          text: "You have been logged out.",
+          icon: "success",
+        });
+        logoutUser();
+      }
+    });
+  };
   return (
     <div className="bg-base-100 shadow-sm sticky top-0 z-10">
       <div className="navbar w-10/12 mx-auto">
@@ -19,9 +40,14 @@ const NavBar = () => {
             </p>
           )}
           {user ? (
-            <button className="btn bg-red-500 text-white">Log Out</button>
+            <button
+              onClick={handleLogout}
+              className="btn bg-red-500 text-white"
+            >
+              Log Out
+            </button>
           ) : (
-            <Link to={"/signIn"} className="btn">
+            <Link to={"/signIn"} className="btn bg-blue-500 text-white rounded-xl">
               Login
             </Link>
           )}
