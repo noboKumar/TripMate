@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Root from "../Root";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
+import NotFound from "../pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
         path: "/signUp",
         Component: SignUp,
       },
+      {
+        path: "*",
+        Component: NotFound,
+      }
     ],
   },
 ]);
