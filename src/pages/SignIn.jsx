@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
   const { loginUser } = useContext(AuthContext);
@@ -13,9 +14,24 @@ const SignIn = () => {
     loginUser(email, password)
       .then((result) => {
         console.log(result);
+        Swal.fire({
+          icon: "success",
+          title: "Login successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Login failed",
+          text: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
   return (
     <div className="flex items-center justify-center py-10">
@@ -37,6 +53,7 @@ const SignIn = () => {
             placeholder="Enter your email"
             className="input input-bordered w-full"
             name="email"
+            required
           />
         </div>
 
@@ -50,6 +67,7 @@ const SignIn = () => {
             placeholder="Enter your password"
             className="input input-bordered w-full"
             name="password"
+            required
           />
         </div>
 

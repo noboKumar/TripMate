@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const { createUser, updateUser, setUser } = useContext(AuthContext);
@@ -21,10 +22,34 @@ const SignUp = () => {
           .then(() => {
             setUser({ ...userData, displayName: userName });
             navigate("/");
+            Swal.fire({
+              icon: "success",
+              title: "Sign Up successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            Swal.fire({
+              icon: "error",
+              title: "Sign Up failed",
+              text: err.message,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Sign Up failed",
+          text: err.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
   };
   return (
     <div className="flex items-center justify-center py-10">
@@ -58,6 +83,7 @@ const SignUp = () => {
             placeholder="Enter your email"
             className="input input-bordered w-full"
             name="email"
+            required
           />
         </div>
 
@@ -71,6 +97,7 @@ const SignUp = () => {
             placeholder="Enter your password"
             className="input input-bordered w-full"
             name="password"
+            required
           />
         </div>
 

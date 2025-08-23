@@ -36,7 +36,7 @@ const NavBar = () => {
         <div className="navbar-end gap-2">
           {user && (
             <p className="font-semibold text-sm bg-gray-100 px-4 py-2 rounded-2xl">
-              {user.displayName}
+              {user.displayName || "User"}
             </p>
           )}
           {user ? (
@@ -48,7 +48,7 @@ const NavBar = () => {
             </button>
           ) : (
             <Link to={"/signIn"} className="btn bg-blue-500 text-white rounded-xl">
-              Login
+              Log in
             </Link>
           )}
         </div>
