@@ -23,8 +23,8 @@ const Hero = () => {
           Create, organize, and save your travel itineraries easily with
           TripMate
         </p>
-        <button className="btn btn-primary font-semibold py-3 px-6 rounded-lg transition">
-          Get Started
+        <button className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer font-semibold py-3 px-6 rounded-lg transition">
+          Add Itinerary
         </button>
       </div>
     </div>

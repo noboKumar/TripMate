@@ -3,6 +3,8 @@ import Home from "../pages/Home";
 import Root from "../Root";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
+import ItinerariesPage from "../pages/Itineraries";
+import AddItinerary from "../pages/AddItineraries";
 
 export const router = createBrowserRouter([
   {
