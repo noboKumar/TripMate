@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
+import GoogleSignIn from "../components/GoogleSignIn";
 
 const SignIn = () => {
   const { loginUser } = useContext(AuthContext);
@@ -73,13 +74,15 @@ const SignIn = () => {
 
         {/* Login Button */}
         <div className="form-control">
-          <button className="btn btn-primary w-full">Login</button>
+          <button className="btn btn-primary rounded-xl w-full">Login</button>
         </div>
+        <div className="divider">OR</div>
+        <GoogleSignIn />
 
         {/* Footer Links */}
         <p className="text-center text-sm text-gray-500 mt-4">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline">
+          <Link to="/signup" className="text-blue-600 hover:underline font-semibold">
             Sign Up
           </Link>
         </p>
