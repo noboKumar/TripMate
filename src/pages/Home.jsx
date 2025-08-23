@@ -6,8 +6,10 @@ import { Toaster } from "react-hot-toast";
 const Home = () => {
   return (
     <div>
-      <Hero></Hero>
-      <ItinerariesPage></ItinerariesPage>
+      <Hero />
+      <div className="w-11/12 mx-auto">
+        <ItinerariesPage />
+      </div>
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
