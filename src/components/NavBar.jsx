@@ -15,7 +15,7 @@ const NavBar = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, log me out!",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
@@ -28,14 +28,14 @@ const NavBar = () => {
     });
   };
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0 z-10">
+    <div className="bg-gray-200 border-b-2 border-gray-300 shadow-sm sticky top-0 z-10">
       <div className="navbar w-10/12 mx-auto">
         <div className="navbar-start">
           <Logo></Logo>
         </div>
         <div className="navbar-end gap-2">
           {user && (
-            <p className="font-semibold bg-gray-100 px-4 py-2 rounded-2xl">
+            <p className="font-semibold text-sm bg-gray-100 px-4 py-2 rounded-2xl">
               {user.displayName}
             </p>
           )}

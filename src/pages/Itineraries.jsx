@@ -11,6 +11,7 @@ import {
 import placeholderImg from "../assets/placeholder-Img.jpeg";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import SearchBar from "../components/SearchBar";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const ItinerariesPage = () => {
   const { user } = useContext(AuthContext);
@@ -60,7 +61,7 @@ const ItinerariesPage = () => {
           Please log in to view your itineraries.
         </p>
         <a
-          href="/login"
+          href="/signin"
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition"
         >
           Log In
@@ -86,7 +87,7 @@ const ItinerariesPage = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-medium py-5 divider">Your Trips:</h1>
+      <h1 className="text-xl md:text-4xl font-medium py-8 divider">Your Trips:</h1>
       <div className="flex gap-5 items-center justify-between">
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <button
@@ -176,8 +177,9 @@ const ItinerariesPage = () => {
             );
           })
         ) : (
-          <div className="col-span-1 md:col-span-2 lg:col-span-4">
-            <p className="text-gray-500">No trips found.</p>
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 text-center flex flex-col items-center gap-4 mt-10">
+            <FaMagnifyingGlass size={40} />
+            <p className="text-gray-500 text-xl">No trips found.</p>
           </div>
         )}
       </div>
